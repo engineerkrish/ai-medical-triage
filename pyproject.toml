@@ -3,7 +3,7 @@ name = "medtriage-env"
 version = "0.1.0"
 description = "AI Medical Triage OpenEnv Project"
 authors = [
-    { name = "Avimanyu" }
+    { name = "Avimanyu", email = "avimanyu@example.com" }
 ]
 readme = "README.md"
 requires-python = ">=3.10"
@@ -16,6 +16,9 @@ dependencies = [
     "openai"
 ]
 
+[tool.openenv]
+entrypoint = "inference.py"
+
 [build-system]
-requires = ["setuptools"]
+requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
