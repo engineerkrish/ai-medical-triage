@@ -1,5 +1,28 @@
 import gradio as gr
+from fastapi import FastAPI
+from pydantic import BaseModel
 from inference import run_model
+
+# ------------------- FASTAPI -------------------
+
+app = FastAPI()
+
+class Input(BaseModel):
+    symptoms: str
+
+# ✅ Required for OpenEnv
+@app.post("/reset")
+def reset():
+    return {"message": "Environment reset successful"}
+
+# ✅ Required for OpenEnv
+@app.post("/step")
+def step(input: Input):
+    output = run_model(input.symptoms)
+    return {"output": output}
+
+
+# ------------------- GRADIO -------------------
 
 def run(symptoms):
     return run_model(symptoms)
@@ -12,4 +35,5 @@ iface = gr.Interface(
     description="Describe your symptoms"
 )
 
-iface.launch(server_name="0.0.0.0", server_port=7860)
+# Mount Gradio inside FastAPI
+app = gr.mount_gradio_app(app, iface, path="/")
