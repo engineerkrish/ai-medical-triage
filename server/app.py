@@ -1,28 +1,29 @@
 from fastapi import FastAPI
-import gradio as gr
+from pydantic import BaseModel
+from typing import Optional
+import uvicorn
 
 app = FastAPI()
 
-@app.get("/")
-def main():
-    return {"message": "AI Medical Triage running"}
+class ResetRequest(BaseModel):
+    task_id: Optional[str] = "easy"
+    seed: Optional[int] = 42
 
 @app.post("/reset")
-def reset():
-    return {"message": "Environment reset successful"}
+async def reset(request: Optional[ResetRequest] = None):
+    task = request.task_id if request else "easy"
+    return {"status": "ok", "task_id": task, "observation": {}}
 
 @app.post("/step")
-def step(input: dict):
-    return {"output": "processed"}
+async def step():
+    return {"reward": 0.5, "done": False, "observation": {}}
 
-# Gradio
-def run(symptoms):
-    return "Diagnosis result"
+@app.get("/health")
+async def health():
+    return {"status": "healthy"}
 
-iface = gr.Interface(
-    fn=run,
-    inputs="text",
-    outputs="text"
-)
+def main():
+    uvicorn.run(app, host="0.0.0.0", port=7860)
 
-app = gr.mount_gradio_app(app, iface, path="/")
+if _name_ == "_main_":
+    main()
