@@ -3,7 +3,7 @@ from pydantic import BaseModel
 from typing import Optional
 import uvicorn
 
-app = FastAPI()
+app = FastAPI(...)
 
 class ResetRequest(BaseModel):
     task_id: Optional[str] = "easy"
@@ -23,7 +23,7 @@ async def health():
     return {"status": "healthy"}
 
 def main():
-    uvicorn.run(app, host="0.0.0.0", port=7860)
+    uvicorn.run(app, host="0.0.0.0", port=8000)
 
 if __name__ == "__main__":
     main()
