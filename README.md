@@ -5,7 +5,7 @@ https://huggingface.co/spaces/Avimanyu8008/medtriage-env
 
 This project follows OpenEnv-style environment design with tasks, reward, and evaluation loop.
 
-## 👋 Hi, I’m Avimanyu
+## 👋 Hi, I’m Krishna
 
 This project started as a simple idea:
 **“Can we build a system that thinks like a first-level doctor?”**
